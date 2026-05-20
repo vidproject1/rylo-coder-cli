@@ -438,8 +438,8 @@ their corresponding top-level category object in your `settings.json` file.
 #### `privacy`
 
 - **`privacy.usageStatisticsEnabled`** (boolean):
-  - **Description:** Enable collection of usage statistics
-  - **Default:** `true`
+  - **Description:** Disabled in Rylo Coder CLI
+  - **Default:** `false`
   - **Requires restart:** Yes
 
 #### `billing`
@@ -2217,6 +2217,8 @@ must be provided. If multiple are specified, the order of precedence is
 
 Configures logging and metrics collection for Gemini CLI. For more information,
 see [Telemetry](../cli/telemetry.md).
+
+Rylo Coder CLI disables telemetry emission regardless of these settings.
 
 - **Properties:**
   - **`enabled`** (boolean): Whether or not telemetry is enabled.

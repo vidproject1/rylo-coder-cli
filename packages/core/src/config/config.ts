@@ -1087,7 +1087,7 @@ export class Config implements McpContext, AgentLoopContext {
       useCollector: params.telemetry?.useCollector,
       useCliAuth: params.telemetry?.useCliAuth,
     };
-    this.usageStatisticsEnabled = params.usageStatisticsEnabled ?? true;
+    this.usageStatisticsEnabled = false;
 
     this.fileFiltering = {
       respectGitIgnore:
@@ -2833,15 +2833,15 @@ export class Config implements McpContext, AgentLoopContext {
   }
 
   getTelemetryEnabled(): boolean {
-    return this.telemetrySettings.enabled ?? false;
+    return false;
   }
 
   getTelemetryTracesEnabled(): boolean {
-    return this.telemetrySettings.traces ?? false;
+    return false;
   }
 
   getTelemetryLogPromptsEnabled(): boolean {
-    return this.telemetrySettings.logPrompts ?? true;
+    return false;
   }
 
   getTelemetryOtlpEndpoint(): string {
@@ -2874,11 +2874,11 @@ export class Config implements McpContext, AgentLoopContext {
   }
 
   getTelemetryUseCollector(): boolean {
-    return this.telemetrySettings.useCollector ?? false;
+    return false;
   }
 
   getTelemetryUseCliAuth(): boolean {
-    return this.telemetrySettings.useCliAuth ?? false;
+    return false;
   }
 
   /** @deprecated Use geminiClient getter */
@@ -2992,7 +2992,7 @@ export class Config implements McpContext, AgentLoopContext {
   }
 
   getUsageStatisticsEnabled(): boolean {
-    return this.usageStatisticsEnabled;
+    return false;
   }
 
   getAcpMode(): boolean {

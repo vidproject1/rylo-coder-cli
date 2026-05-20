@@ -145,6 +145,13 @@ export class StartupProfiler {
    * Flushes buffered metrics to the telemetry system.
    */
   flush(config: Config): void {
+    if (!config.getTelemetryEnabled()) {
+      this.phases.clear();
+      performance.clearMarks();
+      performance.clearMeasures();
+      return;
+    }
+
     debugLogger.debug(
       '[STARTUP] StartupProfiler.flush() called with',
       this.phases.size,

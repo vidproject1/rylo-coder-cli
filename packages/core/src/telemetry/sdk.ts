@@ -111,16 +111,11 @@ const telemetryBuffer: Array<() => void | Promise<void>> = [];
 let activeTelemetryEmail: string | undefined;
 
 export function isTelemetrySdkInitialized(): boolean {
-  return telemetryInitialized;
+  return false;
 }
 
 export function bufferTelemetryEvent(fn: () => void | Promise<void>): void {
-  if (telemetryInitialized) {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    fn();
-  } else {
-    telemetryBuffer.push(fn);
-  }
+  void fn;
 }
 
 async function flushTelemetryBuffer(): Promise<void> {
@@ -163,6 +158,15 @@ function parseOtlpEndpoint(
 }
 
 export async function initializeTelemetry(
+  config: Config,
+  credentials?: JWTInput,
+): Promise<void> {
+  void config;
+  void credentials;
+  return;
+}
+
+async function initializeTelemetryDisabled(
   config: Config,
   credentials?: JWTInput,
 ): Promise<void> {
@@ -395,69 +399,13 @@ export async function initializeTelemetry(
  * This is useful for ensuring telemetry is written before critical operations like /clear.
  */
 export async function flushTelemetry(config: Config): Promise<void> {
-  if (!telemetryInitialized || !spanProcessor || !logRecordProcessor) {
-    return;
-  }
-  try {
-    // Force flush all pending telemetry to disk
-    await Promise.all([
-      spanProcessor.forceFlush(),
-      logRecordProcessor.forceFlush(),
-      metricReader ? metricReader.forceFlush() : Promise.resolve(),
-    ]);
-    if (config.getDebugMode()) {
-      debugLogger.log('OpenTelemetry SDK flushed successfully.');
-    }
-  } catch (error) {
-    debugLogger.error('Error flushing SDK:', error);
-  }
+  void config;
 }
 
 export async function shutdownTelemetry(
   config: Config,
   fromProcessExit = true,
 ): Promise<void> {
-  if (!telemetryInitialized || !sdk) {
-    return;
-  }
-  try {
-    ClearcutLogger.getInstance()?.shutdown();
-    await sdk.shutdown();
-    if (config.getDebugMode() && fromProcessExit) {
-      debugLogger.log('OpenTelemetry SDK shut down successfully.');
-    }
-  } catch (error) {
-    debugLogger.error('Error shutting down SDK:', error);
-  } finally {
-    telemetryInitialized = false;
-    sdk = undefined;
-    // Fully reset the global APIs to allow for re-initialization.
-    // This is primarily for testing environments where the SDK is started
-    // and stopped multiple times in the same process.
-    trace.disable();
-    context.disable();
-    metrics.disable();
-    propagation.disable();
-    diag.disable();
-    if (authListener) {
-      authEvents.off('post_auth', authListener);
-      authListener = undefined;
-    }
-    if (keychainAvailabilityListener) {
-      coreEvents.off(
-        CoreEvent.TelemetryKeychainAvailability,
-        keychainAvailabilityListener,
-      );
-      keychainAvailabilityListener = undefined;
-    }
-    if (tokenStorageTypeListener) {
-      coreEvents.off(
-        CoreEvent.TelemetryTokenStorageType,
-        tokenStorageTypeListener,
-      );
-      tokenStorageTypeListener = undefined;
-    }
-    callbackRegistered = false;
-    activeTelemetryEmail = undefined;
-  }
+  void config;
+  void fromProcessExit;
 }
