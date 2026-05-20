@@ -92,6 +92,11 @@ class DiagLoggerAdapter {
 }
 
 diag.setLogger(new DiagLoggerAdapter(), DiagLogLevel.INFO);
+void trace;
+void context;
+void metrics;
+void propagation;
+void ClearcutLogger;
 
 let sdk: NodeSDK | undefined;
 let spanProcessor: BatchSpanProcessor | undefined;
@@ -166,7 +171,7 @@ export async function initializeTelemetry(
   return;
 }
 
-async function initializeTelemetryDisabled(
+export async function initializeTelemetryDisabled(
   config: Config,
   credentials?: JWTInput,
 ): Promise<void> {

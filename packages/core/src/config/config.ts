@@ -2992,6 +2992,7 @@ export class Config implements McpContext, AgentLoopContext {
   }
 
   getUsageStatisticsEnabled(): boolean {
+    void this.usageStatisticsEnabled;
     return false;
   }
 

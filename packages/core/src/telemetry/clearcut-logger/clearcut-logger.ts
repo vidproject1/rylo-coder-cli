@@ -339,6 +339,7 @@ export class ClearcutLogger {
 
   static getInstance(config?: Config): ClearcutLogger | undefined {
     void config;
+    void ClearcutLogger.instance;
     return undefined;
   }
 
